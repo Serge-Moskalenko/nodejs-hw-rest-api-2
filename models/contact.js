@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
+const { mongooseError } = require("../helpers");
 
 const contactShema = new Schema({
     name: {
@@ -17,6 +18,11 @@ const contactShema = new Schema({
         type: Boolean,
         default: false,
     },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+        required:true,
+    }
 },
     { versionKey: false, timestamps: true });
 
@@ -33,11 +39,7 @@ const favoriteSchema = Joi.object({
 })
 
  
-contactShema.post("save", (error, data, next) => {
-    error.status = 400;
-    console.log(error.status)
-    next()
-    })
+contactShema.post("save", mongooseError)
 
 const Contact = model("contact", contactShema);
 
