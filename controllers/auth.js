@@ -63,7 +63,6 @@ const avatar = async (req, res) => {
     const resultUploadAvatar = path.join(avatarsPath, `${req.user._id}_${originalname}`);
     makeJimp(tempPath,resultUploadAvatar)
 
-    await fs.rename(tempPath, resultUploadAvatar);
     const avatarURL = path.join('avatars', originalname);
     
     User.findByIdAndUpdate(req.user._id, { avatarURL });
