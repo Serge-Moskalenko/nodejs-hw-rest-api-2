@@ -16,7 +16,7 @@ const register = async (req, res) => {
         throw HttpError(409,"Email is used")
     };
     const makeHashPassword = await bcrypt.hash(password, 12);
-    const avatarURL=gravatar.url(email)
+    const avatarURL = gravatar.url(email);
 
     const newUser = await User.create({ ...req.body, password: makeHashPassword,avatarURL });
  
@@ -65,7 +65,7 @@ const avatar = async (req, res) => {
 
     const avatarURL = path.join('avatars', originalname);
     
-    User.findByIdAndUpdate(req.user._id, { avatarURL });
+   await User.findByIdAndUpdate(req.user._id, { avatarURL });
 
     res.status(201).json({ avatarURL });
 };
