@@ -23,7 +23,12 @@ const makeVerifyEmail = (email,veryficationCode) => {
     };
 };
 
+const transporter = (email,verificationCode) => {
+     transport.sendMail(makeVerifyEmail(email,verificationCode))
+        .then(() => console.log("success"))
+        .catch(err =>console.log(err));
+}
+
 module.exports = {
-    makeVerifyEmail,
-    transport
+    transporter
 }

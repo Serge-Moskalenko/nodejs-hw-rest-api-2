@@ -1,8 +1,7 @@
-const { makeVerifyEmail, transport } = require("./nodemailer");
+const {  transporter } = require("./nodemailer");
 const makeJimp = require("./makeJime");
 
 module.exports = {
-    makeVerifyEmail,
-    transport,
+    transporter,
     makeJimp
 }

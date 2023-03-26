@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const path = require("path");
 const fs = require("fs/promises");
-const { transport,makeVerifyEmail,makeJimp } = require("../tools")
+const { transporter,makeJimp } = require("../tools")
 const { nanoid } = require("nanoid");
 const { User } = require("../models/user");
 const { HttpError, ctrlWrapper } = require("../helpers");
@@ -27,9 +27,7 @@ const register = async (req, res) => {
         , verificationCode
     });
 
-    transport.sendMail(makeVerifyEmail(email,verificationCode))
-        .then(() => console.log("success"))
-        .catch(err =>console.log(err));
+    transporter(email, verificationCode);
  
     res.status(201).json({
         email: newUser.email,
@@ -58,10 +56,8 @@ const repeatedVerify = async (req, res) => {
         throw HttpError(401, 'user verify')
     };
 
-    transport.sendMail(makeVerifyEmail(email,user.verificationCode))
-        .then(() => console.log("success"))
-        .catch(err =>console.log(err));
-
+    transporter(email, user.verificationCode);
+    
     res.json({messege:"verify email send success"})
 }
 
