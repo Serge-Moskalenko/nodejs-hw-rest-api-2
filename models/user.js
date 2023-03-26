@@ -33,6 +33,14 @@ const userSchema = new Schema({
         type: String,
         required:true,
     },
+    verify: {
+        type: Boolean,
+        default:false,
+    },
+    verificationCode: {
+        type: String,
+        default:"",
+    }
 
 }, { versionKey: false, timestamps: true });
 
@@ -49,10 +57,13 @@ const loginShema = Joi.object({
     password: Joi.string().min(6).required(),
 });
 
+const repeatedEmail=Joi.object({email: Joi.string().pattern(emailRegular).required(),})
+
 const User = model("user", userSchema);
 
 module.exports = {
     User,
     loginShema,
-    registerShema
+    registerShema,
+    repeatedEmail
 };
